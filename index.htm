@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Demistar Manager</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="css/site.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-sm">
+      <div class="container">
+        <a class="navbar-brand">Demistar Manager</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+          <ul class="nav navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">Privacy</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="row pt-3">
+      <div class="col-4">
+        <div class="list-group" id="devices" role="tablist">
+          <a class="list-group-item list-group-item-action active list-group-item-primary" data-toggle="list"
+            href="#device-adding-form" role="tab">+ Dodaj urządzenie</a>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="tab-content" id="devicesContent">
+
+          <div class="tab-pane fade show active" id="device-adding-form" role="tabpanel">
+            <form>
+              <h2>Dodawanie urządzenia</h2>
+              <div class="form-group">
+                <label for="inAddress">Adres IP</label>
+                <input class="form-control" id="inAddress"
+                  placeholder="Adres IP lub nazwa domenowa urządzenia Demistar" />
+              </div>
+              <div class="form-group">
+                <label for="inDescription">Opis</label>
+                <input class="form-control" id="inDescription" placeholder="Opis wyświetlany w panelu zarządzania" />
+              </div>
+              <button type="submit" class="btn btn-primary" id="btnAddDevice">Dodaj</button>
+            </form>
+          </div>
+
+          <div class="tab-pane fade" id="dev-192-168-55-52-content" role="tabpanel">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-top footer text-muted">
+    <div class="container">
+      &copy; 2022-2023 <a href="https://catk.it/" target="_blank">Mateusz „Catkitty” Karcz</a>
+    </div>
+  </footer>
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"></script>
+  <script src="js/site.js"></script>
+
+</body>
+
+</html>
