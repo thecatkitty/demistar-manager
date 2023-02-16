@@ -56,16 +56,7 @@ renderDevices();
 
 setInterval(() => {
     Manager.getDevices().forEach(device => {
-        var date = new Date();
-        var offset = date.getTimezoneOffset();
-
-        var dateStr = (new Date(date - offset * 60000)).toISOString().split(".")[0];
-        $.ajax("http://" + device.address + ":2137/wallclock", {
-            data: JSON.stringify({
-                "time":dateStr
-            }),
-            contentType: "application/json",
-            type: "POST"
-        });
+        var api = new DemistarApi("http://" + device.address + ":2137");
+        api.setWallclock(new Date());
     });
 }, 30000);
