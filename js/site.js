@@ -18,6 +18,13 @@ Configuration.onDeviceAdd = device => {
         });
     $("#devices").append(listItem);
 
+    var content = $("#template-dev-content").clone()
+        .removeClass("d-none")
+        .attr("id", devId + "-content");
+
+    content.find("[data-bind]").each(function (i) { $(this).text(device[$(this).data("bind")]) });
+    $("#devicesContent").append(content);
+
     device.updater = setInterval(() => device.api.setWallclock(new Date()), 30000);
 }
 
