@@ -20,21 +20,21 @@ Configuration.onDeviceAdd = device => {
             $(this).tab("show")
         });
     fillBindings(listItem, device);
-    $("#devices").append(listItem);
+    $("#dev-links").append(listItem);
 
     var content = $("#template-dev-content").clone()
         .attr("id", devId + "-content");
     fillBindings(content, device);
-    $("#devicesContent").append(content);
+    $("#dev-contents").append(content);
 
     device.updater = setInterval(() => device.api.setWallclock(new Date()), 30000);
 }
 
 Configuration.load();
 
-$("#btnAddDevice").click(() => {
-    var address = $("#inAddress").val();
-    var description = $("#inDescription").val();
+$("#btn-add-dev").click(() => {
+    var address = $("#in-address").val();
+    var description = $("#in-description").val();
 
     try {
         Configuration.addDevice(address, description);
