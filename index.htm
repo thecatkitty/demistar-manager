@@ -77,9 +77,18 @@
     </div>
   </footer>
 
-  <div class="tab-pane fade d-none" id="template-dev-content" role="tabpanel">
-    <p><b>Opis:</b> <span data-bind="description"></span></p>
-    <p><b>Adres IP:</b> <span data-bind="address"></span></p>
+  <div class="d-none">
+
+    <a class="list-group-item list-group-item-action" id="template-dev" role="tabpanel" data-toggle="list">
+      <span data-bind="description"></span> (<span data-bind="address"></span>)
+    </a>
+
+
+    <div class="tab-pane fade" id="template-dev-content" role="tabpanel">
+      <p><b>Opis:</b> <span data-bind="description"></span></p>
+      <p><b>Adres IP:</b> <span data-bind="address"></span></p>
+    </div>
+
   </div>
 
   <!-- Bootstrap core JavaScript

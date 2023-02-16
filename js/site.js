@@ -1,28 +1,30 @@
+function fillBindings(element, model) {
+    $(element)
+        .find("[data-bind]")
+        .each(function (i) {
+            $(this).text(model[$(this).data("bind")])
+        });
+}
+
 Configuration.onDeviceAdd = device => {
     var devId = "dev-" + device.address.replaceAll(".", "-");
     if ($("#" + devId).length) {
         return;
     }
 
-    var listItem = $("<a>")
-        .addClass("list-group-item")
-        .addClass("list-group-item-action")
+    var listItem = $("#template-dev").clone()
         .attr("id", devId)
-        .attr("role", "tabpanel")
         .attr("href", "#" + devId + "-content")
-        .data("toggle", "list")
-        .text(device.description + " (" + device.address + ")")
         .on("click", function (e) {
             e.preventDefault()
             $(this).tab("show")
         });
+    fillBindings(listItem, device);
     $("#devices").append(listItem);
 
     var content = $("#template-dev-content").clone()
-        .removeClass("d-none")
         .attr("id", devId + "-content");
-
-    content.find("[data-bind]").each(function (i) { $(this).text(device[$(this).data("bind")]) });
+    fillBindings(content, device);
     $("#devicesContent").append(content);
 
     device.updater = setInterval(() => device.api.setWallclock(new Date()), 30000);
