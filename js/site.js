@@ -1,9 +1,28 @@
-function fillBindings(element, model) {
+function updateBinding(element, name, value) {
     $(element)
-        .find("[data-bind]")
+        .find("[data-bind=" + name + "]")
         .each(function (i) {
-            $(this).text(model[$(this).data("bind")])
+            $(this).text(value)
         });
+}
+
+function fillBindings(element, model) {
+    for (const [name, value] of Object.entries(model)) {
+        updateBinding(element, name, value);
+    }
+}
+
+function updateDeviceView(device) {
+    device.api.setWallclock(new Date())
+        .then(_ => device.api.getWallclock())
+        .then(response => response.json())
+        .then(data =>
+            updateBinding(device.element, "updated", new Date(data.time).toLocaleString()));
+}
+
+function createUpdater(device, interval) {
+    updateDeviceView(device);
+    return setInterval(() => updateDeviceView(device), interval);
 }
 
 Configuration.onDeviceAdd = device => {
@@ -27,7 +46,8 @@ Configuration.onDeviceAdd = device => {
     fillBindings(content, device);
     $("#dev-contents").append(content);
 
-    device.updater = setInterval(() => device.api.setWallclock(new Date()), 30000);
+    device.element = content;
+    device.updater = createUpdater(device, 60000);
 }
 
 Configuration.load();

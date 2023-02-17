@@ -3,6 +3,10 @@ class DemistarApi {
         this.root = rootUrl;
     }
 
+    get(endpoint) {
+        return fetch(this.root + endpoint);
+    }
+
     post(endpoint, data) {
         return fetch(this.root + endpoint, {
             method: "POST",
@@ -18,5 +22,9 @@ class DemistarApi {
         var dateStr = (new Date(date - offset * 60000)).toISOString().split(".")[0];
 
         return this.post("/wallclock", { time: dateStr });
+    }
+
+    getWallclock() {
+        return this.get("/wallclock");
     }
 }
