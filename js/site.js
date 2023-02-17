@@ -1,23 +1,9 @@
-function updateBinding(element, name, value) {
-    $(element)
-        .find("[data-bind=" + name + "]")
-        .each(function (i) {
-            $(this).text(value)
-        });
-}
-
-function fillBindings(element, model) {
-    for (const [name, value] of Object.entries(model)) {
-        updateBinding(element, name, value);
-    }
-}
-
 function updateDeviceView(device) {
     device.api.setWallclock(new Date())
         .then(_ => device.api.getWallclock())
         .then(response => response.json())
         .then(data =>
-            updateBinding(device.element, "updated", new Date(data.time).toLocaleString()));
+            device.bindings.update("updated", new Date(data.time).toLocaleString()));
 }
 
 function createUpdater(device, interval) {
@@ -38,16 +24,16 @@ Configuration.onDeviceAdd = device => {
             e.preventDefault()
             $(this).tab("show")
         });
-    fillBindings(listItem, device);
+
+    new Bindings(listItem).fill(device);
     $("#dev-links").append(listItem);
 
     var content = $("#template-dev-content").clone()
         .attr("id", devId + "-content");
-    fillBindings(content, device);
-    $("#dev-contents").append(content);
-
-    device.element = content;
+    device.bindings = new Bindings(content);
+    device.bindings.fill(device);
     device.updater = createUpdater(device, 60000);
+    $("#dev-contents").append(content);
 }
 
 Configuration.load();
