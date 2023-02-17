@@ -3,6 +3,7 @@ class DemistarApi {
         this.root = rootUrl;
     }
 
+    // Lower layer - HTTP methods and JSON
     get(endpoint) {
         return fetch(this.root + endpoint)
             .then(response => response.json());
@@ -19,6 +20,12 @@ class DemistarApi {
             .then(response => response.json());
     }
 
+    delete(endpoint) {
+        return fetch(this.root + endpoint, { method: "DELETE" })
+            .then(response => response.json());
+    }
+
+    // API - Local time settings
     setWallclock(date) {
         var offset = date.getTimezoneOffset();
         var dateStr = (new Date(date - offset * 60000)).toISOString().split(".")[0];
@@ -28,5 +35,22 @@ class DemistarApi {
 
     getWallclock() {
         return this.get("/wallclock");
+    }
+
+    // API - Timeline programming
+    getTimeline() {
+        return this.get("/timeline");
+    }
+
+    postTimelineItem(item) {
+        return this.post("/timeline", item);
+    }
+
+    deleteTimeline() {
+        return this.delete("/timeline");
+    }
+
+    deleteTimelineItem(id) {
+        return this.delete("/timeline/" + id);
     }
 }
