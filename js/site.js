@@ -19,6 +19,42 @@ function formatDuration(seconds) {
     return str.trim();
 }
 
+function renderStage(stage) {
+    var template = $("#template-stage-" + stage.name);
+    if (template.length != 0) {
+        var div = template.clone().removeAttr("id");
+        new Bindings(div).fill(stage);
+        return div;
+    }
+
+    var div = $("<div>");
+
+    div.append("<b>" + stage.name + "</b>");
+    for (const [key, value] of Object.entries(stage)) {
+        if (key != "name") {
+            div.append("<p>" + key + ": " + JSON.stringify(value) + "</p>")
+        }
+    }
+
+    return div;
+}
+
+function updateBacklogView(device, data) {
+    var template = $("#template-timeline-item");
+    var backlog = device.bindings.get("backlog");
+    backlog.empty();
+    for (const item of data.backlog.sort(i => i.start)) {
+        var row = template.clone().removeAttr("id");
+        new Bindings(row).fill({
+            start: new Date(item.start).toLocaleString(),
+            duration: item.duration ? formatDuration(item.duration) : "∞",
+            screentime: formatDuration(item.screentime),
+            stage: renderStage(item.stage)
+        });
+        backlog.append(row);
+    }
+}
+
 function updateDeviceView(device) {
     device.api.setWallclock(new Date())
         .then(_ => device.api.getWallclock())
@@ -31,21 +67,7 @@ function updateDeviceView(device) {
 
             return device.api.getTimeline();
         })
-        .then(data => {
-            var template = $("#template-timeline-item");
-            var backlog = device.bindings.get("backlog");
-            backlog.empty();
-            for (const item of data.backlog.sort(i => i.start)) {
-                var row = template.clone().removeAttr("id");
-                new Bindings(row).fill({
-                    start: new Date(item.start).toLocaleString(),
-                    duration: item.duration ? formatDuration(item.duration) : "∞",
-                    screentime: formatDuration(item.screentime),
-                    stage: JSON.stringify(item.stage)
-                });
-                backlog.append(row);
-            }
-        })
+        .then(data => updateBacklogView(device, data))
         .catch(error => {
             var alert = $("#template-alert").clone()
                 .removeAttr("id")

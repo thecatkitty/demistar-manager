@@ -11,7 +11,7 @@ class Bindings {
     update(name, value) {
         this.get(name)
             .each(function (i) {
-                $(this).text(value)
+                $(this).html(value)
             });
     }
 
