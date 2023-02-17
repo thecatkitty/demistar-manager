@@ -1,9 +1,24 @@
 function updateDeviceView(device) {
     device.api.setWallclock(new Date())
         .then(_ => device.api.getWallclock())
-        .then(response => response.json())
-        .then(data =>
-            device.bindings.update("updated", new Date(data.time).toLocaleString()));
+        .then(data => {
+            device.bindings.update("updated", new Date(data.time).toLocaleString());
+            device.bindings.get("updated")
+                .removeClass("text-danger")
+                .addClass("text-success");
+            device.listItem.removeClass("list-group-item-danger");
+        })
+        .catch(error => {
+            var alert = $("#template-alert").clone()
+                .removeAttr("id")
+                .addClass("alert-danger");
+            new Bindings(alert).fill({ message: error });
+            device.bindings.element.prepend(alert);
+            device.bindings.get("updated")
+                .removeClass("text-success")
+                .addClass("text-danger");
+            device.listItem.addClass("list-group-item-danger");
+        })
 }
 
 function createUpdater(device, interval) {
@@ -25,13 +40,13 @@ Configuration.onDeviceAdd = device => {
             $(this).tab("show")
         });
 
+    device.listItem = listItem;
     new Bindings(listItem).fill(device);
     $("#dev-links").append(listItem);
 
     var content = $("#template-dev-content").clone()
         .attr("id", devId + "-content");
     device.bindings = new Bindings(content);
-    device.bindings.fill(device);
     device.updater = createUpdater(device, 60000);
     $("#dev-contents").append(content);
 }

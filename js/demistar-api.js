@@ -4,7 +4,8 @@ class DemistarApi {
     }
 
     get(endpoint) {
-        return fetch(this.root + endpoint);
+        return fetch(this.root + endpoint)
+            .then(response => response.json());
     }
 
     post(endpoint, data) {
@@ -15,6 +16,7 @@ class DemistarApi {
             },
             body: JSON.stringify(data)
         })
+            .then(response => response.json());
     }
 
     setWallclock(date) {

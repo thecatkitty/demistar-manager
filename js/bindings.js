@@ -3,9 +3,13 @@ class Bindings {
         this.element = element;
     }
 
+    get(name) {
+        return $(this.element)
+            .find("[data-bind=" + name + "]");
+    }
+
     update(name, value) {
-        $(this.element)
-            .find("[data-bind=" + name + "]")
+        this.get(name)
             .each(function (i) {
                 $(this).text(value)
             });
