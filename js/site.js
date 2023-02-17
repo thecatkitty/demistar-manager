@@ -1,3 +1,24 @@
+function formatDuration(seconds) {
+    var str = "";
+    if (seconds >= 3600) {
+        var hours = Math.floor(seconds / 3600);
+        str += hours + "h ";
+        seconds -= hours * 3600;
+    }
+
+    if (seconds >= 60) {
+        var minutes = Math.floor(seconds / 60);
+        str += minutes + "min ";
+        seconds -= minutes * 60;
+    }
+
+    if ((seconds > 0) || (str.length == 0)) {
+        str += seconds + "s";
+    }
+
+    return str.trim();
+}
+
 function updateDeviceView(device) {
     device.api.setWallclock(new Date())
         .then(_ => device.api.getWallclock())
@@ -7,6 +28,23 @@ function updateDeviceView(device) {
                 .removeClass("text-danger")
                 .addClass("text-success");
             device.listItem.removeClass("list-group-item-danger");
+
+            return device.api.getTimeline();
+        })
+        .then(data => {
+            var template = $("#template-timeline-item");
+            var backlog = device.bindings.get("backlog");
+            backlog.empty();
+            for (const item of data.backlog.sort(i => i.start)) {
+                var row = template.clone().removeAttr("id");
+                new Bindings(row).fill({
+                    start: new Date(item.start).toLocaleString(),
+                    duration: item.duration ? formatDuration(item.duration) : "∞",
+                    screentime: formatDuration(item.screentime),
+                    stage: JSON.stringify(item.stage)
+                });
+                backlog.append(row);
+            }
         })
         .catch(error => {
             var alert = $("#template-alert").clone()

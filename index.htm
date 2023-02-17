@@ -85,13 +85,36 @@
 
 
     <div class="tab-pane fade" id="template-dev-content" role="tabpanel">
-      <p><b>Ostatnia aktualizacja:</b> <span data-bind="updated">Nie połączono</span></p>
+      <div class="row">
+        <p><b>Ostatnia aktualizacja:</b> <span data-bind="updated">Nie połączono</span></p>
+      </div>
+
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Rozpoczęcie</th>
+            <th>Czas trwania</th>
+            <th>Cykl</th>
+            <th>Scena</th>
+          </tr>
+        </thead>
+        <tbody data-bind="backlog"></tbody>
+      </table>
     </div>
 
     <div class="alert alert-dismissible fade show" id="template-alert" role="alert">
       <span data-bind="message"></span>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
+
+    <table>
+      <tr id="template-timeline-item">
+        <td data-bind="start"></td>
+        <td data-bind="duration"></td>
+        <td data-bind="screentime"></td>
+        <td data-bind="stage"></td>
+      </tr>
+    </table>
 
   </div>
 
