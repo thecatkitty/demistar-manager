@@ -44,7 +44,9 @@ function updateBacklogView(device, data) {
     var backlog = device.bindings.get("backlog");
     backlog.empty();
     for (const item of data.backlog.sort(i => i.start)) {
-        var row = template.clone().removeAttr("id");
+        var row = template.clone().removeAttr("id")
+            .data("dev", device.address)
+            .data("item", item.id);
         new Bindings(row).fill({
             start: new Date(item.start).toLocaleString(),
             duration: item.duration ? formatDuration(item.duration) : "∞",
@@ -53,6 +55,14 @@ function updateBacklogView(device, data) {
         });
         backlog.append(row);
     }
+}
+
+function showAlert(element, severity, message) {
+    var alert = $("#template-alert").clone()
+        .removeAttr("id")
+        .addClass("alert-" + severity);
+    new Bindings(alert).fill({ message: message });
+    element.prepend(alert);
 }
 
 function updateDeviceView(device) {
@@ -69,11 +79,7 @@ function updateDeviceView(device) {
         })
         .then(data => updateBacklogView(device, data))
         .catch(error => {
-            var alert = $("#template-alert").clone()
-                .removeAttr("id")
-                .addClass("alert-danger");
-            new Bindings(alert).fill({ message: error });
-            device.bindings.element.prepend(alert);
+            showAlert(device.bindings.element, "danger", error);
             device.bindings.get("updated")
                 .removeClass("text-success")
                 .addClass("text-danger");
@@ -84,6 +90,16 @@ function updateDeviceView(device) {
 function createUpdater(device, interval) {
     updateDeviceView(device);
     return setInterval(() => updateDeviceView(device), interval);
+}
+
+function removeItem(initiator) {
+    var row = $(initiator).parents("tr");
+    var device = Configuration.devices.find(i => i.address == row.data("dev"));
+    var itemid = row.data("item");
+
+    device.api.deleteTimelineItem(itemid)
+        .then(row.remove())
+        .catch(error => showAlert(device.bindings.element, "danger", error));
 }
 
 Configuration.onDeviceAdd = device => {

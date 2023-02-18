@@ -89,18 +89,21 @@
         <p><b>Ostatnia aktualizacja:</b> <span data-bind="updated">Nie połączono</span></p>
       </div>
 
-      <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th>Sala</th>
-            <th>Rozpoczęcie</th>
-            <th>Czas trwania</th>
-            <th>Cykl</th>
-            <th>Scena</th>
-          </tr>
-        </thead>
-        <tbody data-bind="backlog"></tbody>
-      </table>
+      <div class="row">
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>Sala</th>
+              <th>Rozpoczęcie</th>
+              <th>Czas trwania</th>
+              <th>Cykl</th>
+              <th>Scena</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody data-bind="backlog"></tbody>
+        </table>
+      </div>
     </div>
 
     <div class="alert alert-dismissible fade show" id="template-alert" role="alert">
@@ -115,6 +118,9 @@
         <td data-bind="duration"></td>
         <td data-bind="screentime"></td>
         <td data-bind="stage"></td>
+        <td>
+          <button type="button" class="close" onclick="removeItem(this)">&times;</button>
+        </td>
       </tr>
     </table>
 
