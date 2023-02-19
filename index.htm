@@ -77,6 +77,113 @@
     </div>
   </footer>
 
+  <div class="modal fade" id="dlg-add-stage" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="dlg-add-stageLabel">Dodawanie sceny</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="in-stage-room">Sala</label>
+                <input type="number" class="form-control" id="in-stage-room" value="0" />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="in-stage-start">Rozpoczęcie</label>
+                <input type="datetime-local" class="form-control" id="in-stage-start" />
+              </div>
+              <div class="form-group col-md-3">
+                <label for="in-stage-duration">Czas trwania</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="in-stage-duration" value="60" />
+                  <div class="input-group-append">
+                    <span class="input-group-text">min</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="in-stage-screentime">Cykl</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="in-stage-screentime" value="45" />
+                  <div class="input-group-append">
+                    <span class="input-group-text">s</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>Scena</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="in-stage-name" id="in-stage-meeting"
+                    value="meeting" checked="checked" />
+                  <label class="form-check-label" for="in-stage-meeting">Spotkanie</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="in-stage-name" id="in-stage-wallclock"
+                    value="wallclock" />
+                  <label class="form-check-label" for="in-stage-wallclock">Zegar</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="in-stage-name" id="in-stage-manual"
+                    value="manual" />
+                  <label class="form-check-label" for="in-stage-manual">Niestandardowa</label>
+                </div>
+              </div>
+              <div class="form-group col-md-8">
+                <div class="form-group col-md-12">
+                  <input class="form-control" id="in-stage-top" placeholder="Temat spotkania" />
+                </div>
+                <div class="form-group col-md-12">
+                  <input class="form-control" id="in-stage-bottom" placeholder="Prowadzący" />
+                </div>
+                <div class="form-group col-md-12" id="grp-stage-inner">
+                  <label class="form-check-label">Wewnętrzny pierścień</label>
+                  <div class="input-group">
+                    <select class="custom-select" id="in-stage-inner-animation">
+                      <option value="color" selected="selected">Kolor</option>
+                      <option value="blink">Migotanie</option>
+                      <option value="breath">Oddech</option>
+                    </select>
+                    <input type="color" class="form-control" id="in-stage-inner-color" />
+                    <input type="number" class="form-control" id="in-stage-inner-interval" value="5000" />
+                    <div class="input-group-append">
+                      <span class="input-group-text">ms</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-12" id="grp-stage-outer">
+                  <label class="form-check-label">Zewnętrzny pierścień</label>
+                  <div class="input-group">
+                    <select class="custom-select" id="in-stage-outer-animation">
+                      <option value="color" selected="selected">Kolor</option>
+                      <option value="blink">Migotanie</option>
+                      <option value="breath">Oddech</option>
+                    </select>
+                    <input type="color" class="form-control" id="in-stage-outer-color" />
+                    <input type="number" class="form-control" id="in-stage-outer-interval" value="5000" />
+                    <div class="input-group-append">
+                      <span class="input-group-text">ms</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Zamknij</button>
+          <button type="button" class="btn btn-primary" id="btn-apply-stage">Zatwierdź</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="d-none">
 
     <a class="list-group-item list-group-item-action" id="template-dev" role="tabpanel" data-toggle="list">
@@ -86,7 +193,10 @@
 
     <div class="tab-pane fade" id="template-dev-content" role="tabpanel">
       <div class="row">
-        <p><b>Ostatnia aktualizacja:</b> <span data-bind="updated">Nie połączono</span></p>
+        <p>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dlg-add-stage">+ Dodaj scenę</button>
+          <b>Ostatnia aktualizacja:</b> <span data-bind="updated">Nie połączono</span>
+        </p>
       </div>
 
       <div class="row">
