@@ -69,6 +69,12 @@ function updateBacklogView(device, data) {
         });
         backlog.append(row);
     }
+
+    backlog.children().each(function() {
+        if (data.cycle.includes($(this).data("item"))) {
+            $(this).addClass("table-primary");
+        }
+    })
 }
 
 function showAlert(element, severity, message) {
