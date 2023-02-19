@@ -203,6 +203,8 @@ $("#btn-apply-stage").click(() => {
                 showAlert($("#dlg-add-stage .modal-body"), "danger", response.error);
             } else {
                 $("#dlg-add-stage").modal("hide");
+                clearInterval(device.updater);
+                device.updater = createUpdater(device, 60000);
             }
         })
         .catch(e => showAlert($("#dlg-add-stage .modal-body"), "danger", e));
