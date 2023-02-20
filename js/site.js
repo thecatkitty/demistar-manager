@@ -57,7 +57,7 @@ function updateBacklogView(device, data) {
     var template = $("#template-timeline-item");
     var backlog = device.bindings.get("backlog");
     backlog.empty();
-    for (const item of data.backlog.sort(i => i.start)) {
+    for (const item of data.backlog.sort((a, b) => new Date(a.start) - new Date(b.start))) {
         var row = template.clone().removeAttr("id")
             .data("dev", device.address)
             .data("item", item.id);
