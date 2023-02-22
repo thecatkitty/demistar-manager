@@ -25,7 +25,7 @@ class Configuration {
         var device = {
             address: address,
             description: description,
-            api: new DemistarApi("http://" + address + ":2137")
+            api: new DemistarApi("http://" + address)
         };
         this.devices.push(device);
         this.onDeviceAdd(device);

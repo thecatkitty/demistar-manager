@@ -70,7 +70,7 @@ function updateBacklogView(device, data) {
         backlog.append(row);
     }
 
-    backlog.children().each(function() {
+    backlog.children().each(function () {
         if (data.cycle.includes($(this).data("item"))) {
             $(this).addClass("table-primary");
         }
@@ -123,7 +123,7 @@ function removeItem(initiator) {
 }
 
 Configuration.onDeviceAdd = device => {
-    var devId = "dev-" + device.address.replaceAll(".", "-");
+    var devId = "dev-" + device.address.replaceAll(".", "-").replaceAll(":", "-");
     if ($("#" + devId).length) {
         return;
     }
